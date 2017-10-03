@@ -30,32 +30,34 @@
       <input id="add-animal" type="submit" value="Add an Animal">
     </form>
     <div id=gifs-appear-here></div>
+  </div> 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
       
-      var animals = [];
+      var animals = ["Cat","Dog","Lion",];
 
-      
-      function renderButtons() {
+      // Creates a new button when an animal name is entered      
+      function newButtons() {
 
         $("#animal-view").empty();
 
-        
         for (var i = 0; i < animals.length; i++) {
           
           var a = $("<button>");
           
-          a.addClass("animal");
+          a.addClass("animals");
           
           a.attr("data-name", animals[i]);
           
           a.text(animals[i]);
           
           $("#animal-view").append(a);
+
         }
+
       }
 
-      
       $("#add-animal").on("click", function(event) {
         
         event.preventDefault();
@@ -64,14 +66,18 @@
         
         animals.push(newAnimal);
         
-        renderButtons();
+        newButtons();
       
-       $("button").on("click", function() {
+
+      
+    });  
+   
+    $(document).on("click","button", function(){  
+    
       
       var animal= $(this).attr("data-name");
 
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        animals + "&api_key=kypEck2HaT8Gz472wWh6hMcnViQvQi26&limit=10";
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=kypEck2HaT8Gz472wWh6hMcnViQvQi26&limit=10";
 
       $.ajax({
           url: queryURL,
@@ -79,9 +85,8 @@
         })
 
         .done(function(response) {
-
+          console.log(response);
           var animals = response.data;
-          console.log(animals)
 
           for (var i = 0; i < animals.length; i++) {
 
@@ -93,26 +98,25 @@
 
               var animalImage = $("<img>");
 
-              animalImage.attr("src", animals[i].images.fixed_height.url);
+              // image animate needs to be created.
+
+              animalImage.attr("src", animals[i].images.fixed_height_still.url);
 
               gifDiv.append(p);
               gifDiv.append(animalImage);
 
-              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+              // Putting the gifDiv to the "#gifs-appear-here" div in the HTML
               $("#gifs-appear-here").prepend(gifDiv);
             }
           
         });
     }); 
-
-      });
-
-      renderButtons();
+      newButtons();
 
 
 
     </script>
-  </div>
+  
 </body>
 
 </html>

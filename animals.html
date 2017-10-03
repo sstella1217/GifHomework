@@ -33,9 +33,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
       
-      var animals = ["Tiger","Lion","Zebra"];
+      var animals = [];
 
-
+      
       function renderButtons() {
 
         $("#animal-view").empty();
@@ -62,7 +62,7 @@
         
         var newAnimal = $("#animal-input").val().trim();
         
-        newAnimal.push(animals);
+        animals.push(newAnimal);
         
         renderButtons();
       
@@ -93,7 +93,7 @@
 
               var animalImage = $("<img>");
 
-              animalImage.attr("src", animals[i].images.fixed_height.url).still;
+              animalImage.attr("src", animals[i].images.fixed_height.url);
 
               gifDiv.append(p);
               gifDiv.append(animalImage);
